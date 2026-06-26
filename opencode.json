@@ -1,0 +1,19 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "provider": {
+      "myserver": {
+        "npm": "@ai-sdk/openai-compatible",
+        "name": "mylocalserver",
+        "options": {
+          "baseURL": "http://103.108.136.156:5000/v1",
+          "apiKey": "{env:OPENAI_API_KEY}"
+        },
+        "models": {
+          "gpt-oss:120b": {
+            "name": "gpt-oss:120b"
+          }
+        }
+      }
+    },
+    "model": "mylocalserver/gpt-oss:120b"
+  }
