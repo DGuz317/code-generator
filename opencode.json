@@ -3,10 +3,9 @@
     "provider": {
       "myserver": {
         "npm": "@ai-sdk/openai-compatible",
-        "name": "mylocalserver",
+        "name": "myserver",
         "options": {
-          "baseURL": "http://103.108.136.156:5000/v1",
-          "apiKey": "{env:OPENAI_API_KEY}"
+          "baseURL": "http://103.108.136.156:5000/v1"
         },
         "models": {
           "gpt-oss:120b": {
@@ -14,6 +13,5 @@
           }
         }
       }
-    },
-    "model": "mylocalserver/gpt-oss:120b"
+    }
   }
