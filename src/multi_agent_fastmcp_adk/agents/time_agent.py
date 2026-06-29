@@ -38,7 +38,7 @@ def _mcp_time_tool(city: str) -> Dict[str, Any]:
 
 # Define the sub‑agent.
 time_agent = Agent(
-    model="ollama_chat/gpt-oss:20b",
+    model="ollama_chat/llama3.1:8b",
     name="time_agent",
     description="Provides the current time via the MCP 'tell_time' tool.",
     instruction="Use the provided _mcp_time_tool to obtain the current time for a city.",

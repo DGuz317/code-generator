@@ -36,7 +36,7 @@ def _mcp_calculator_tool(expression: str) -> Dict[str, Any]:
 
 # Define the calculator sub‑agent.
 calculator_agent = Agent(
-    model="ollama_chat/gpt-oss:20b",
+    model="ollama_chat/llama3.1:8b",
     name="calculator_agent",
     description="Performs arithmetic calculations via the MCP 'calculate_number' tool.",
     instruction="Use the provided _mcp_calculator_tool to evaluate arithmetic expressions.",

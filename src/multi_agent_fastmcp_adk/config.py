@@ -14,7 +14,7 @@ Required variables (with sensible defaults where appropriate):
 * ``MCP_TOOL_RETRY_COUNT`` – number of retry attempts for MCP calls
   (default ``3``).
 * ``ADK_MODEL`` – Ollama model identifier (default
-  ``ollama_chat/gpt-oss:20b``).
+  ``ollama_chat/llama3.1:8b``).
 * ``OLLAMA_API_BASE`` – base URL for the local Ollama server (default
   ``http://localhost:11434``).
 
@@ -46,7 +46,7 @@ MCP_CALCULATOR_TOOL_NAME = _required("MCP_CALCULATOR_TOOL_NAME", "calculate_numb
 MCP_TOOL_RETRY_COUNT = int(_required("MCP_TOOL_RETRY_COUNT", "3"))
 
 # Ollama model configuration.
-ADK_MODEL = _required("ADK_MODEL", "ollama_chat/gpt-oss:20b")
+ADK_MODEL = _required("ADK_MODEL", "ollama_chat/llama3.1:8b")
 OLLAMA_API_BASE = _required("OLLAMA_API_BASE", "http://localhost:11434")
 
 __all__ = [
