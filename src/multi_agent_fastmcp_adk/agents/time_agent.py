@@ -1,32 +1,48 @@
-"""Time sub‑agent implementation.
+"""Time sub‑agent implementation using ADK.
 
-The agent demonstrates how a sub‑agent consumes a filtered MCP tool‑set
-produced by :pymod:`src.multi_agent_fastmcp_adk.tools.mcp_client`. The
-actual MCP call is currently a stub (see that module) – the purpose of this
-file is to wire the pieces together so later development can replace the stub
-with a real implementation.
+This module defines a sub‑agent that wraps the MCP ``tell_time`` tool in an
+ADK ``Agent`` instance. The agent can be routed to by a root agent in a multi‑
+agent workflow.
 """
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Dict
+
+# ADK Agent class – imported lazily to avoid hard dependency if the package is not installed.
+try:
+    from google.adk.agents.llm_agent import Agent  # type: ignore
+except ImportError:  # pragma: no cover
+    # Fallback stub for environments without the ADK package.
+    class Agent:  # pylint: disable=too-few-public-methods
+        def __init__(self, *_, **__):
+            raise RuntimeError("google.adk is not installed in this environment")
 
 from ..tools.mcp_client import get_time_toolset
 
 
-def get_current_time() -> Any:
-    """Return the current time using the MCP ``tell_time`` tool.
+def _mcp_time_tool(city: str) -> Dict[str, Any]:
+    """Call the MCP ``tell_time`` tool for a given *city*.
 
-    The function obtains a filtered tool‑set that contains only the time‑related
-    MCP tool (as configured in :pymod:`src.multi_agent_fastmcp_adk.config`). It
-    then invokes the tool. Because the underlying tool is a stub, a
-    ``RuntimeError`` will be raised until the MCP integration is completed.
+    The underlying MCP client currently provides a stub implementation which
+    raises ``RuntimeError`` until a real MCP server is wired up.
     """
 
     toolset = get_time_toolset()
     # The filtered set contains exactly one entry.
     (_, tool) = next(iter(toolset.items()))
-    return tool()
+    # The stub tool does not accept arguments, but we keep the signature to
+    # match ADK's expectations.
+    result = tool()
+    return {"city": city, "time": result}
 
+# Define the sub‑agent.
+time_agent = Agent(
+    model="ollama_chat/gpt-oss:20b",
+    name="time_agent",
+    description="Provides the current time via the MCP 'tell_time' tool.",
+    instruction="Use the provided _mcp_time_tool to obtain the current time for a city.",
+    tools=[_mcp_time_tool],
+)
 
-__all__ = ["get_current_time"]
+__all__ = ["time_agent"]
